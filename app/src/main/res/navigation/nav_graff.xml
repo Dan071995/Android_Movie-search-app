@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graff"
+    app:startDestination="@id/startFragment">
+
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.example.recyclervievretrofit.mainui.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_startFragment_to_movieListFragment"
+            app:destination="@id/movieListFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_moviePagedListFragment"
+            app:destination="@id/moviePagedListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieListFragment"
+        android:name="com.example.recyclervievretrofit.movielist.MovieListFragment"
+        android:label="fragment_movie_paged_list"
+        tools:layout="@layout/fragment_movie_paged_list" >
+        <action
+            android:id="@+id/action_movieListFragment_to_onClickItemFragment"
+            app:destination="@id/onClickItemFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/moviePagedListFragment"
+        android:name="com.example.recyclervievretrofit.pagedmovielist.MoviePagedListFragment"
+        android:label="MoviePagedListFragment" >
+        <action
+            android:id="@+id/action_moviePagedListFragment_to_onClickItemFragment"
+            app:destination="@id/onClickItemFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/onClickItemFragment"
+        android:name="com.example.recyclervievretrofit.mainui.OnClickItemFragment"
+        android:label="fragment_on_click_item"
+        tools:layout="@layout/fragment_on_click_item" />
+</navigation>
