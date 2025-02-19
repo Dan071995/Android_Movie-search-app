@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:padding="0dp"
-    android:clickable="true"
-    android:focusable="true"
+    android:layout_height="wrap_content"
     android:background="@drawable/my_castom_ripple_effect"
-    >
+    android:padding="6dp"
+    android:clickable="true"
+    android:focusable="true">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageViewPoster"
@@ -24,21 +24,24 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textStyle="bold"
+        android:layout_marginStart="8dp"
         android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/textViewGenres"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewPoster"
         app:layout_constraintTop_toTopOf="@+id/imageViewPoster"
         tools:text="Title" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewGenres"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@id/textViewDescription"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewTitle"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
         tools:text="Genres" />
@@ -48,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@id/textViewCountries"
         app:layout_constraintStart_toStartOf="@+id/textViewGenres"
         app:layout_constraintTop_toBottomOf="@+id/textViewGenres"
         tools:text="Description" />
@@ -57,19 +60,32 @@
         android:id="@+id/textViewCountries"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewDescription"
         app:layout_constraintTop_toBottomOf="@+id/textViewDescription"
-        tools:text="Countries"
-        android:paddingBottom="20dp"
-        />
+        tools:text="Countries" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="[ ? ]"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        android:textColor="@color/blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewДляВЕСАЧтобыДАнныViewБылРАстянут"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="                                                                                                                                         "
+        android:text="                                                                                                                                                                                                                    "
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

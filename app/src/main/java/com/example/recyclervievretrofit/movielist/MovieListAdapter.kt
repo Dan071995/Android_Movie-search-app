@@ -1,15 +1,23 @@
 package com.example.recyclervievretrofit.movielist
 
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import coil.load
+import com.example.recyclervievretrofit.R
 import com.example.recyclervievretrofit.databinding.MovieItemBinding
 import com.example.recyclervievretrofit.models.Movie
 
 class MovieListAdapter(
-    val onClick:(Movie) -> Unit
+    val onClick:(Movie) -> Unit,
 ):ListAdapter<Movie,MovieViewHolder>(DiffUtilCallBack()) {
 
     //В данной функции необходимо просто создать разметку для элемента хранителя xml
@@ -21,7 +29,7 @@ class MovieListAdapter(
     //В этой функции устанавливаем данные в элемент
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val item = getItem(position)//Достаем конкретный фильм из массива
-        with(holder.binding){
+        with(holder.binding) {
             textViewTitle.text = item?.nameRu ?:""
             textViewGenres.text = item?.genres?.joinToString(",") { it.genre }
             textViewDescription.text = "Премьера ${item?.premiereRu}"
@@ -30,14 +38,46 @@ class MovieListAdapter(
             item?.let {
                 imageViewPoster.load(it.posterUrl)
             }
-        }
-        //Установим клик лисенер для элементов
-        holder.binding.root.setOnClickListener {
-            item?.let {
-                onClick(item)
+
+            //Установим клик лисенер для элементов
+            root.setOnClickListener {
+                item?.let {
+                    onClick(item)
+                }
+            }
+
+            //Клик лисенер для infoTv:
+            textViewInfo.setOnClickListener { view ->
+                showTooltip(view, position)
             }
         }
     }
+}
+
+private fun showTooltip(anchorView: View, position: Int) {
+    val context = anchorView.context
+    val inflater = LayoutInflater.from(context)
+    val tooltipView = inflater.inflate(R.layout.tooltip_layout, null)
+
+    // Настройка текста подсказки
+    val tooltipText = tooltipView.findViewById<TextView>(R.id.tooltip_text)
+    tooltipText.text = "Hint for item at position $position"
+
+    // Создание PopupWindow
+    val popupWindow = PopupWindow(
+        tooltipView,
+        ViewGroup.LayoutParams.WRAP_CONTENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT,
+        true
+    )
+
+    // Показ PopupWindow
+    popupWindow.showAsDropDown(anchorView, 0, 0, Gravity.START)
+
+    // Закрытие PopupWindow через 3 секунды
+    Handler(Looper.getMainLooper()).postDelayed({
+        popupWindow.dismiss()
+    }, 3000)
 }
 
 //Создаем требуемый для ListAdapter Callback. В нем мы описываем логику по которой будут сравниваться элементы между собой

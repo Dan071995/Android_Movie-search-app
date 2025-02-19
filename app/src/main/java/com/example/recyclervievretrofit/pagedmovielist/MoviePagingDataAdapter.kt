@@ -1,10 +1,18 @@
 package com.example.recyclervievretrofit.pagedmovielist
 
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import coil.load
+import com.example.recyclervievretrofit.R
 import com.example.recyclervievretrofit.databinding.MovieItemBinding
 import com.example.recyclervievretrofit.models.Movie
 import com.example.recyclervievretrofit.movielist.MovieViewHolder
@@ -31,15 +39,44 @@ class MoviePagingDataAdapter(
             item?.let {
                 imageViewPoster.load(it.posterUrl)
             }
-        }
-        //Усианавливаем ClickListener на каждый элемент списка:
-        holder.binding.root.setOnClickListener {
-            item?.let {
-                onClick(it)
+            //Усианавливаем ClickListener на каждый элемент списка:
+            root.setOnClickListener {
+                item?.let {
+                    onClick(it)
+                }
+            }
+
+            textViewInfo.setOnClickListener { view ->
+                showTooltip(view, position)
             }
         }
     }
+}
 
+private fun showTooltip(anchorView: View, position: Int) {
+    val context = anchorView.context
+    val inflater = LayoutInflater.from(context)
+    val tooltipView = inflater.inflate(R.layout.tooltip_layout, null)
+
+    // Настройка текста подсказки
+    val tooltipText = tooltipView.findViewById<TextView>(R.id.tooltip_text)
+    tooltipText.text = "[PA] Hint for item at position $position"
+
+    // Создание PopupWindow
+    val popupWindow = PopupWindow(
+        tooltipView,
+        ViewGroup.LayoutParams.WRAP_CONTENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT,
+        true
+    )
+
+    // Показ PopupWindow
+    popupWindow.showAsDropDown(anchorView, 0, 0, Gravity.START)
+
+    // Закрытие PopupWindow через 3 секунды
+    Handler(Looper.getMainLooper()).postDelayed({
+        popupWindow.dismiss()
+    }, 3000)
 }
 
 //Создаем требуемый для DataAdapter Callback. В нем мы описываем логику по которой будут сравниваться элементы между собой
